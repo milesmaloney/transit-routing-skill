@@ -9,8 +9,10 @@ class TransitRouting(MycroftSkill):
     #gets the route to a destination from the current location or a given departure location [destination keyword REQUIRED]
     @intent_file_handler('routing.transit.intent')
     def handle_routing_transit(self, message):
-        #initializes/retrieves client
-        gmaps = mapsClient.getClient()
+        #retrieves key from hidden file and initializes/retrieves client
+        keyFile = self.file_system.open(".key.txt", "r")
+        key = keyFile.read()
+        gmaps = mapsClient.getClient(key)
 
         #gets the keyword values from the utterance
         departure = message.data.get('departure')
@@ -42,24 +44,20 @@ class mapsClient:
     client = None
     #creates or returns the single instance of the maps client: use this as the constructor
     @staticmethod
-    def getClient():
+    def getClient(key):
         if mapsClient.__instance == None:
-            mapsClient.__instance = mapsClient()
+            mapsClient.__instance = mapsClient(key)
         return mapsClient.__instance
 
     #initializes (only called when there is no instance)
-    def __init__(self):
+    def __init__(self, key):
         if mapsClient.__instance != None:
             raise Exception("This class is a singleton!")
         else:
             mapsClient.__instance = self
-            mapsClient.client = googlemaps.Client(self.getKey())
+            mapsClient.client = googlemaps.Client(key)
 
-    #gets the API key from the hidden file on the machine
-    def getKey(self):
-        keyFile = open(".key.txt")
-        return keyFile.read()
-
+    
     #gets the intended route directions
     def getRoute(self, departure, destination):
         #gets the latitude/longitude of the current location for default departure (doesn't affect the string)
