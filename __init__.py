@@ -64,9 +64,8 @@ class mapsClient:
         if departure == "here":
             departureLatLng = geocoder.ip('me').latlng
             departure = str(departureLatLng[0]) + "," + str(departureLatLng[1])
-        gmaps = self.getClient()
         now = datetime.now()
-        directions_result = gmaps.client.directions(departure, destination, mode="transit", departure_time=now)
+        directions_result = self.client.directions(departure, destination, mode="transit", departure_time=now)
         return directions_result
 
     def getMycroftResponse(self, departure, destination):
