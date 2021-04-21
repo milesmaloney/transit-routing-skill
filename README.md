@@ -2,7 +2,8 @@
 Gives the user a route to where they want to go from where they currently are
 
 ## About
-Uses google maps api to find directions from the current location to a destination and repeats those directions to the user
+Uses google maps api to find directions from the current location to a destination and repeats those directions to the user. 
+**Requires the user to have a Google Maps API key. The Google Maps API key should be placed in a file named ".key.txt" in Picroft's /home/pi/.mycroft/skills/TransitRouting.**
 
 ## Examples
 * "How do i get to another station?"
