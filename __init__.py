@@ -130,9 +130,11 @@ def formatInstructions(instruction):
 def formatTimeandDistance(tdData, departure, destination):
     #payload contains the departure time as the first element
     depTime = tdData[0].get("text") + " " + tdData[0].get("time_zone") + " time"
+    depTime = depTime.replace("_"," ")
 
     #payload contains the ETA as the second element
     ETA = tdData[1].get("text") + " " + tdData[1].get("time_zone") + " time"
+    ETA = ETA.replace("_"," ")
 
     #payload contains the duration as the third element and needs reformatting to be read correctly (the time measurement is abbreviated)
     duration = tdData[2].get("text").replace("mins", "minutes")
